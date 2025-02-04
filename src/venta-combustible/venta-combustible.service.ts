@@ -73,25 +73,23 @@ export class VentaCombustibleService {
     if (estacionServicioId) {
       whereClause.estacionServicioId = estacionServicioId;
     }
+
     if (fechaInicio) {
-      const startDate = new Date(fechaInicio);
-      startDate.setHours(0, 0, 0, 0);
+      const startDate = new Date(`${fechaInicio}T00:00:00.000Z`); // Asegura UTC
+      let endDate;
+
       if (fechaFin) {
-        const endDate = new Date(fechaFin);
-        endDate.setHours(23, 59, 59, 999);
-        whereClause.fechaDespacho = {
-          gte: startDate,
-          lte: endDate,
-        };
+        endDate = new Date(`${fechaFin}T23:59:59.999Z`); // Asegura UTC
       } else {
-        const endDate = new Date(fechaInicio);
-        endDate.setHours(23, 59, 59, 999);
-        whereClause.fechaDespacho = {
-          gte: startDate,
-          lte: endDate,
-        };
+        endDate = new Date(`${fechaInicio}T23:59:59.999Z`); // Mismo día hasta final
       }
+
+      whereClause.fechaDespacho = {
+        gte: startDate,
+        lte: endDate,
+      };
     }
+
 
     if (usoCarId || tipoCarId) {
       whereClause.car = {};
