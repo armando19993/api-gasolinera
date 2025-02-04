@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Query } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Query, Request } from '@nestjs/common';
 import { VentaCombustibleService } from './venta-combustible.service';
 import { CreateVentaCombustibleDto } from './dto/create-venta-combustible.dto';
 import { UpdateVentaCombustibleDto } from './dto/update-venta-combustible.dto';
@@ -15,8 +15,8 @@ export class VentaCombustibleController {
   }
 
   @Get()
-  findAll(@Query() query) {
-    return this.ventaCombustibleService.findAll(query);
+  findAll(@Query() query, @Request() req) {
+    return this.ventaCombustibleService.findAll(query, req.user);
   }
 
   @Get(':id')
