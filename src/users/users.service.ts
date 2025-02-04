@@ -60,6 +60,16 @@ export class UsersService {
       }
     })
 
+    if (updateUserDto.clave) {
+      const hashedPassword = await bcrypt.hash(updateUserDto.clave, 10);
+      await this.prisma.users.update({
+        where: { id },
+        data: {
+          clave: hashedPassword
+        }
+      })
+    }
+
     return { data, message: 'Usuario actualizado con exito!' }
   }
 
