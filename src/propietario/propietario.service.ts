@@ -48,7 +48,7 @@ export class PropietarioService {
       include: {
         ventas: {
           orderBy: {
-            createdAt: 'asc'
+            id: 'desc'
           }
         }
       }
