@@ -18,6 +18,9 @@ export class VentaCombustibleService {
       orderBy: {
         createdAt: 'desc',
       },
+      include: {
+        car: true
+      }
     });
 
     if (lastVenta) {
@@ -33,6 +36,10 @@ export class VentaCombustibleService {
       }
     }
 
+    if( Number(createVentaCombustibleDto.litrosDespachados) > Number(lastVenta.car.maxLitros) ){
+      throw new BadRequestException(`No se puede registrar la venta. La cantidad de litros excede el máximo permitido.`);
+    }
+
     const data = await this.prisma.ventaCombustible.create({
       data: {
         litrosDespachados: createVentaCombustibleDto.litrosDespachados,
@@ -45,10 +52,13 @@ export class VentaCombustibleService {
     return { data, message: 'Venta de combustible registrada correctamente' };
   }
 
-  async findAll(query) {
+  async findAll(query, user) {
     const { propietarioCedula, carPlaca, estacionServicioId, fechaInicio, fechaFin, usoCarId, tipoCarId } = query;
 
     let whereClause: any = {};
+    if(user.role === 'DESPACHADOR' || user.role === 'ADMINISTRADOR'){
+      whereClause.estacionServicioId = user.estacionServicioId
+    }
 
     if (propietarioCedula) {
       whereClause.propietarioCedula = parseInt(propietarioCedula);
