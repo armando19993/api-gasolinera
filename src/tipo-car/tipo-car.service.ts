@@ -26,8 +26,13 @@ export class TipoCarService {
     return `This action returns a #${id} tipoCar`;
   }
 
-  update(id: number, updateTipoCarDto: UpdateTipoCarDto) {
-    return `This action updates a #${id} tipoCar`;
+  async update(id: number, updateTipoCarDto: UpdateTipoCarDto) {
+    const data = await this.prisma.tipoCar.update({
+      where: { id },
+      data: updateTipoCarDto
+    })
+
+    return {data, message: 'Tipo de vehiculo actualizado'}
   }
 
   remove(id: number) {
