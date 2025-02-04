@@ -17,10 +17,13 @@ export class VentaCombustibleService {
       },
       orderBy: {
         createdAt: 'desc',
-      },
-      include: {
-        car: true
       }
+    });
+
+    const vehiculo = await this.prisma.car.findFirst({
+      where: {
+        placa: carPlaca,
+      },
     });
 
     if (lastVenta) {
@@ -36,7 +39,7 @@ export class VentaCombustibleService {
       }
     }
 
-    if( Number(createVentaCombustibleDto.litrosDespachados) > Number(lastVenta.car.maxLitros) ){
+    if( Number(createVentaCombustibleDto.litrosDespachados) > Number(vehiculo.maxLitros) ){
       throw new BadRequestException(`No se puede registrar la venta. La cantidad de litros excede el máximo permitido.`);
     }
 
