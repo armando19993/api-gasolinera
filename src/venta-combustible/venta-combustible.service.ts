@@ -39,7 +39,7 @@ export class VentaCombustibleService {
       }
     }
 
-    if( Number(createVentaCombustibleDto.litrosDespachados) > Number(vehiculo.maxLitros) ){
+    if (Number(createVentaCombustibleDto.litrosDespachados) > Number(vehiculo.maxLitros)) {
       throw new BadRequestException(`No se puede registrar la venta. La cantidad de litros excede el máximo permitido.`);
     }
 
@@ -59,7 +59,7 @@ export class VentaCombustibleService {
     const { propietarioCedula, carPlaca, estacionServicioId, fechaInicio, fechaFin, usoCarId, tipoCarId } = query;
 
     let whereClause: any = {};
-    if(user.role === 'DESPACHADOR' || user.role === 'ADMINISTRADOR'){
+    if (user.role === 'DESPACHADOR' || user.role === 'ADMINISTRADOR') {
       whereClause.estacionServicioId = user.estacionServicioId
     }
 
@@ -93,7 +93,7 @@ export class VentaCombustibleService {
     }
 
     if (usoCarId || tipoCarId) {
-      whereClause.car = {}; 
+      whereClause.car = {};
       if (usoCarId) {
         whereClause.car.usoCarId = parseInt(usoCarId);
       }
@@ -109,7 +109,12 @@ export class VentaCombustibleService {
       include: {
         propietario: true,
         estacionServicio: true,
-        car: true,
+        car: {
+          include: {
+            tipoCar: true,
+            usoCar: true
+          }
+        },
       },
     });
 
