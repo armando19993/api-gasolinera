@@ -45,6 +45,13 @@ export class PropietarioService {
       where: {
         cedula
       },
+      include: {
+        ventas: {
+          orderBy: {
+            createdAt: 'desc'
+          }
+        }
+      }
     })
 
     return { data, message: 'Propietario obtenido con exito!' }
