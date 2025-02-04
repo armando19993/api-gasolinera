@@ -1,0 +1,25 @@
+meta {
+  name: Editar
+  type: http
+  seq: 2
+}
+
+patch {
+  url: {{SERVER}}users/76342cbe-ce97-44bb-bb27-da9105d847a9
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{TOKEN}}
+}
+
+body:json {
+  {
+    "nombre": "Admin Estacion",
+    "usuario": "admine",
+    "clave": "admine",
+    "role": "ADMINISTRADOR",
+    "estacionServicioId": "87ab0856-adb0-4ba7-a6b9-e3f2b5cbb50c"
+  }
+}

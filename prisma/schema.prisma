@@ -1,0 +1,107 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Users {
+  id                 String            @id @default(uuid())
+  publicId           Int               @unique @default(autoincrement())
+  nombre             String
+  usuario            String
+  correo             String?
+  clave              String
+  role               ROLE              @default(REPORTER)
+  estacionServicio   EstacionServicio? @relation(fields: [estacionServicioId], references: [id])
+  createdAt          DateTime          @default(now())
+  updatedAt          DateTime          @updatedAt
+  estacionServicioId String?
+  Propietario        Propietario[]
+}
+
+model TipoCar {
+  id        Int      @id @default(autoincrement())
+  nombre    String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  cars      Car[]
+}
+
+model UsoCar {
+  id        Int      @id @default(autoincrement())
+  nombre    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  cars      Car[]
+}
+
+model EstacionServicio {
+  id        String             @id @default(uuid())
+  publicId  Int                @unique @default(autoincrement())
+  nombre    String
+  parroquia String?
+  telefono  String?
+  createdAt DateTime           @default(now())
+  updatedAt DateTime           @updatedAt
+  ventas    VentaCombustible[]
+  users     Users[]
+}
+
+model Propietario {
+  cedula      Int                @id
+  nombre      String
+  apellido    String
+  direccion   String
+  telefono    String
+  correo      String?
+  registrador Users              @relation(fields: [usersId], references: [id])
+  createdAt   DateTime           @default(now())
+  updatedAt   DateTime           @updatedAt
+  cars        Car[]
+  ventas      VentaCombustible[]
+  usersId     String
+}
+
+model Car {
+  placa             String             @id
+  marca             String
+  modelo            String
+  serial            String
+  color             String
+  maxLitros         Decimal            @db.Decimal(10, 2)
+  usoCar            UsoCar             @relation(fields: [usoCarId], references: [id])
+  tipoCar           TipoCar            @relation(fields: [tipoCarId], references: [id])
+  propietario       Propietario        @relation(fields: [propietarioCedula], references: [cedula])
+  codigo_car        String?            @default("0")
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+  ventas            VentaCombustible[]
+  usoCarId          Int
+  tipoCarId         Int
+  propietarioCedula Int
+}
+
+model VentaCombustible {
+  id                 Int              @id @default(autoincrement())
+  litrosDespachados  Int?
+  fechaDespacho      DateTime?        @db.Date() @default(now())
+  estacionServicio   EstacionServicio @relation(fields: [estacionServicioId], references: [id])
+  propietario        Propietario      @relation(fields: [propietarioCedula], references: [cedula])
+  car                Car              @relation(fields: [carPlaca], references: [placa])
+  createdAt          DateTime         @default(now())
+  updatedAt          DateTime         @updatedAt
+  estacionServicioId String
+  propietarioCedula  Int
+  carPlaca           String
+}
+
+enum ROLE {
+  DESPACHADOR
+  ADMINISTRADOR
+  CENSADOR
+  REPORTER
+  SUPERADMIN
+}

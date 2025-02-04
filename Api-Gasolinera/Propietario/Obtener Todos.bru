@@ -1,0 +1,15 @@
+meta {
+  name: Obtener Todos
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{SERVER}}propietario
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{TOKEN}}
+}

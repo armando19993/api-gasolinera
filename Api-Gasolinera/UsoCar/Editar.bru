@@ -1,0 +1,21 @@
+meta {
+  name: Editar
+  type: http
+  seq: 3
+}
+
+patch {
+  url: {{SERVER}}uso-car/1
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{TOKEN}}
+}
+
+body:json {
+  {
+    "nombre": "Particular"
+  }
+}

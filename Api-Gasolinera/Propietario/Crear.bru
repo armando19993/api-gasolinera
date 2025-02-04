@@ -1,0 +1,25 @@
+meta {
+  name: Crear
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{SERVER}}propietario
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{TOKEN}}
+}
+
+body:json {
+  {
+    "cedula": 36123033,
+    "nombre": "Samuel",
+    "apellido": "Tovar",
+    "direccion": "Guacara",
+    "telefono": "53466566757"
+  }
+}

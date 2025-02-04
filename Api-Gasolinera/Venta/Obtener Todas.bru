@@ -1,0 +1,29 @@
+meta {
+  name: Obtener Todas
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{SERVER}}venta-combustible
+  body: multipartForm
+  auth: bearer
+}
+
+params:query {
+  ~carPlaca: 
+  ~propietarioCedula: 36123033
+  ~estacionServicioId: 
+  ~fechaInicio: 
+  ~fechaFin: 
+  ~usoCarId: 2
+  ~tipoCarId: 3
+}
+
+auth:bearer {
+  token: {{TOKEN}}
+}
+
+body:multipart-form {
+  : 
+}

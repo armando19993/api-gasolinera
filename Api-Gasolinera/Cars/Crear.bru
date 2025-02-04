@@ -1,0 +1,29 @@
+meta {
+  name: Crear
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{SERVER}}car
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{TOKEN}}
+}
+
+body:json {
+  {
+    "placa": "xdm841",
+    "marca": "chevrolet",
+    "modelo": "aveo",
+    "serial": "gdfvbr67567",
+    "color": "blanco",
+    "maxLitros": 100,
+    "usoCarId": 2,
+    "tipoCarId": 3,
+    "propietarioCedula": 36123033
+  }
+}

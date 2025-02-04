@@ -1,0 +1,15 @@
+meta {
+  name: Obtener Todas
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{SERVER}}estacion-servicio
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{TOKEN}}
+}

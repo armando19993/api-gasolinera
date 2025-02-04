@@ -1,0 +1,21 @@
+meta {
+  name: Editar
+  type: http
+  seq: 3
+}
+
+patch {
+  url: {{SERVER}}estacion-servicio/87ab0856-adb0-4ba7-a6b9-e3f2b5cbb50c
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{TOKEN}}
+}
+
+body:json {
+  {
+    "nombre": "Estacion 1"
+  }
+}
