@@ -57,6 +57,7 @@ export class VentaCombustibleService {
 
   async findAll(query, user) {
     const { propietarioCedula, carPlaca, estacionServicioId, fechaInicio, fechaFin, usoCarId, tipoCarId } = query;
+    console.log(query)
 
     let whereClause: any = {};
     if (user.role === 'DESPACHADOR' || user.role === 'ADMINISTRADOR') {
