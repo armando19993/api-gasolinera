@@ -48,13 +48,13 @@ export class PropietarioService {
       include: {
         ventas: {
           orderBy: {
-            id: 'desc'
+            id: 'asc' // Ordenar por ID en orden descendente
           }
         }
       }
-    })
+    });
 
-    return { data, message: 'Propietario obtenido con exito!' }
+    return { data, message: 'Propietario obtenido con éxito!' };
   }
 
   async update(cedula: string, updatePropietarioDto: UpdatePropietarioDto) {

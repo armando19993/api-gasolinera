@@ -69,7 +69,12 @@ export class CarService {
         usoCar: true,
         tipoCar: true,
         propietario: true,
-        ventas: true,
+        ventas: {
+          orderBy: {
+            id: 'desc'
+          },
+          take: 1
+        },
       },
     })
 
