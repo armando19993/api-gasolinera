@@ -84,7 +84,7 @@ export class VentaCombustibleService {
         endDate = new Date(`${fechaInicio}T23:59:59.999Z`); // Mismo día hasta final
       }
 
-      whereClause.fechaDespacho = {
+      whereClause.createdAt = {
         gte: startDate,
         lte: endDate,
       };
