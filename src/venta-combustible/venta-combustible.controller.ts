@@ -23,4 +23,9 @@ export class VentaCombustibleController {
   findOne(@Param('id') id: string) {
     return this.ventaCombustibleService.findOne(+id);
   }
+
+  @Get('estadistiscas/home')
+  estadistiscas(@Request() req) {
+    return this.ventaCombustibleService.estadisticas(req.user);
+  }
 }

@@ -131,4 +131,13 @@ export class VentaCombustibleService {
   async findOne(id: number) {
     return `This action returns a #${id} ventaCombustible`;
   }
+
+  async estadisticas(user) {
+    const data = await this.prisma.ventaCombustible.findMany()
+
+    return { data, message: 'Estadisticas de ventas de combustible' }
+    if (user.role == 'SUPERADMIN') {
+
+    }
+  }
 }
